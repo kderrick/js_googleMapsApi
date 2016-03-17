@@ -1,5 +1,30 @@
+
+
 $( document ).ready(function() {
   $('#locateUser').click(locateUser);
+  $('#searchLocation').click(function(){
+    var enteredLat = parseInt($('#lat').val());
+    var enteredLong = parseInt($('#long').val());
+
+    geolocationSuccessTest(enteredLat, enteredLong);
+
+
+    function geolocationSuccessTest(enteredLat, enteredLong) {
+      var userLatLng = new google.maps.LatLng(enteredLat, enteredLong);
+      var myOptions = {
+        zoom : 7,
+        center : userLatLng,
+        mapTypeId : google.maps.MapTypeId.ROADMAP
+      };
+      // Draw the map - you have to use 'getElementById' here.
+      var mapObject = new google.maps.Map(document.getElementById("map"), myOptions);
+      // Place the marker
+      new google.maps.Marker({
+        map: mapObject,
+        position: userLatLng
+      });
+    }
+  });
 });
 
 //google maps functions
@@ -36,7 +61,7 @@ function geolocationSuccess(position) {
   var myOptions = {
     zoom : 16,
     center : userLatLng,
-    mapTypeId : google.maps.MapTypeId.ROADMAP
+    mapTypeId : google.maps.MapTypeId.SATELLITE
   };
   // Draw the map - you have to use 'getElementById' here.
   var mapObject = new google.maps.Map(document.getElementById("map"), myOptions);
